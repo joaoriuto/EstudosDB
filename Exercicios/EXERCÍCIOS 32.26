@@ -1,0 +1,765 @@
+EXERCÍCIOS 32.26
+
+--> CRIANDO O BANCO:
+
+CREATE DATABASE EXERCICIOS;
+USE EXERCICIOS;
+
+CREATE TABLE FUNCIONARIOS (
+	IDFUNCIONARIO INTEGER,
+	NOME VARCHAR(100),
+	EMAIL VARCHAR(100),
+	SEXO VARCHAR(10),
+	DEPARTAMENTO VARCHAR(100),
+	ADMISSAO VARCHAR(100),
+	SALARIO INTEGER,
+	CARGO VARCHAR(100),
+	IDREGIAO INT
+);
+
+--> PONTOS A CONSIDERAR: 
+
+ANALIZAR A PERFORMANCE DE CONSULTA AO BANCO;
+OR -> A CONDIÇÃO DE MAIOR CHANCE, DEVE VIR PRIMEIRO;
+	CASO A PRIMEIRA CONDIÇÃO SEJA SATISFEITA, ENTÃO A BUSCA FINALIZA.
+
+AND -> A CONDIÇÃO QUE TENHA A MENOR CHANCE DEVE VIR NA PRIMEIRA POSIÇÃO
+	SÓ IRÁ VERIFICAR CASO A PRIMEIRA CONDIÇÃO SEJA TRUE; SE FOR, ENTÃO ASSIM ELE CONSULTARIA NOVAMENTE O BANCO.
+	
+PARA REALIZAR UMA ANÁLISE, PODEMOS UTILIZAR O COUNT(*) + GROUP BY + ORDER BY
+
+SELECT SEXO, COUNT(*) FROM FUNCIONARIOS GROUP BY SEXO;
+
+SELECT DEPARTAMENTO, COUNT(*) AS QTD FROM FUNCIONARIOS GROUP BY DEPARTAMENTO ORDER BY QTD;
+
+	FILMES = 36
+	ROUPAS = 53
+
+
+001 - TRAGA OS FUNCIONARIOS QUE TRABALHAM NO DEPARTAMENTO DE FILMES OU NO
+		DEPARTAMENTO DE ROUPAS;
+
+SELECT NOME, DEPARTAMENTO, CARGO FROM FUNCIONARIOS WHERE DEPARTAMENTO = "ROUPAS" OR DEPARTAMENTO = "FILMES" ORDER BY DEPARTAMENTO; 
++------------+--------------+-------------------------------+
+| NOME       | DEPARTAMENTO | CARGO                         |
++------------+--------------+-------------------------------+
+| Sanchez    | Filmes       | Sales Representative          |
+| Johnson    | Filmes       | Account Representative I      |
+| Carr       | Filmes       | VP Quality Control            |
+| Elliott    | Filmes       | Senior Financial Analyst      |
+| Greene     | Filmes       | Assistant Manager             |
+| Reed       | Filmes       | Assistant Media Planner       |
+| Spencer    | Filmes       | Senior Editor                 |
+| Simmons    | Filmes       | Developer III                 |
+| Weaver     | Filmes       | Software Engineer II          |
+| Gomez      | Filmes       | Biostatistician II            |
+| Franklin   | Filmes       | VP Quality Control            |
+| Roberts    | Filmes       | Electrical Engineer           |
+| Rice       | Filmes       | Data Coordiator               |
+| Morris     | Filmes       | Legal Assistant               |
+| Price      | Filmes       | Analyst Programmer            |
+| Martin     | Filmes       | Senior Developer              |
+| Bishop     | Filmes       | Mechanical Systems Engineer   |
+| Dean       | Filmes       | Nurse                         |
+| Thompson   | Filmes       | Account Executive             |
+| Sanders    | Filmes       | funcionarios Accountant III   |
+| Sanders    | Filmes       | Tax Accountant                |
+| Harris     | Filmes       | Geologist I                   |
+| Walker     | Filmes       | Assistant Manager             |
+| Little     | Filmes       | Research Assistant I          |
+| Griffin    | Filmes       | Nurse Practicioner            |
+| George     | Filmes       | Software Consultant           |
+| Harris     | Filmes       | Statistician II               |
+| Kelley     | Filmes       | Senior Financial Analyst      |
+| Gonzales   | Filmes       | Clinical Specialist           |
+| Arnold     | Filmes       | Account Representative I      |
+| Snyder     | Filmes       | Account Coordinator           |
+| Gordon     | Filmes       | Account Coordinator           |
+| Warren     | Filmes       | Electrical Engineer           |
+| Cooper     | Filmes       | Human Resources Assistant III |
+| Clark      | Filmes       | VP Accounting                 |
+| Knight     | Filmes       | Help Desk Operator            |
+| Black      | Roupas       | Data Coordiator               |
+| Price      | Roupas       | Quality Engineer              |
+| Hawkins    | Roupas       | Quality Engineer              |
+| Oliver     | Roupas       | Software Engineer III         |
+| Cunningham | Roupas       | Junior Executive              |
+| Freeman    | Roupas       | General Manager               |
+| Nguyen     | Roupas       | Graphic Designer              |
+| Washington | Roupas       | Speech Pathologist            |
+| Fisher     | Roupas       | Financial Advisor             |
+| Ferguson   | Roupas       | Compensation Analyst          |
+| Watson     | Roupas       | Saúde Coach III               |
+| Day        | Roupas       | Sales Associate               |
+| Rose       | Roupas       | Web Developer II              |
+| Richardson | Roupas       | Engineer III                  |
+| Berry      | Roupas       | Research Assistant I          |
+| Arnold     | Roupas       | VP Product Management         |
+| Jordan     | Roupas       | Nuclear Power Engineer        |
+| Wright     | Roupas       | Computer Systems Analyst I    |
+| Gonzales   | Roupas       | Help Desk Technician          |
+| Young      | Roupas       | Systems Administrator IV      |
+| White      | Roupas       | VP Quality Control            |
+| Marshall   | Roupas       | Recruiter                     |
+| Ortiz      | Roupas       | Structural Analysis Engineer  |
+| Alexander  | Roupas       | Marketing Assistant           |
+| Phillips   | Roupas       | Sales Representative          |
+| Gomez      | Roupas       | Human Resources Assistant I   |
+| Reid       | Roupas       | Sales Representative          |
+| Price      | Roupas       | VP Accounting                 |
+| Williamson | Roupas       | Director of Sales             |
+| Roberts    | Roupas       | Geological Engineer           |
+| Richards   | Roupas       | Senior Developer              |
+| Boyd       | Roupas       | Senior Editor                 |
+| Murray     | Roupas       | Senior Cost Accountant        |
+| Richards   | Roupas       | Legal Assistant               |
+| Elliott    | Roupas       | Administrative Assistant I    |
+| Kim        | Roupas       | Administrative Officer        |
+| Olson      | Roupas       | Office Assistant III          |
+| James      | Roupas       | Software Engineer I           |
+| James      | Roupas       | Structural Analysis Engineer  |
+| Sims       | Roupas       | Actuary                       |
+| Taylor     | Roupas       | Assistant Media Planner       |
+| Perkins    | Roupas       | Senior Cost Accountant        |
+| Lynch      | Roupas       | Technical Writer              |
+| Knight     | Roupas       | Operator                      |
+| Roberts    | Roupas       | Help Desk Operator            |
+| Gray       | Roupas       | Biostatistician I             |
+| Kelley     | Roupas       | Marketing Assistant           |
+| Greene     | Roupas       | Research Assistant III        |
+| Rice       | Roupas       | Cost Accountant               |
+| Marshall   | Roupas       | VP Product Management         |
+| Burton     | Roupas       | Teacher                       |
+| Richards   | Roupas       | Media Manager I               |
+| Hill       | Roupas       | Information Systems Manager   |
++------------+--------------+-------------------------------+
+89 rows in set (0.01 sec)
+
+
+002 - O GESTOR DE MARKETING PEDIU A LISTA DAS FUNCIONARIAS QUE TABALHAM NO
+	DEPARTAMENTO DE FILMES OU NO DEPARTAMENTO LAR. ELE NECESSITA ENVIAR UM 
+	E-MAIL PARA AS COLABORADORAS DESTES DOIS SETORES.
+	
+	SELECT DEPARTAMENTO, COUNT(*) AS QTD FROM FUNCIONARIOS WHERE DEPARTAMENTO = "FILMES" OR DEPARTAMENTO = "LAR" GROUP BY DEPARTAMENTO;
++--------------+-----+
+| DEPARTAMENTO | QTD |
++--------------+-----+
+| Filmes       |  36 |
+| Lar          |  52 |
++--------------+-----+
+	
+SELECT NOME, SEXO, DEPARTAMENTO FROM FUNCIONARIOS  WHERE SEXO = "FEMININO" AND (DEPARTAMENTO = "LAR" OR DEPARTAMENTO = "FILMES") ORDER BY DEPARTAMENTO;
++------------+----------+--------------+
+| NOME       | SEXO     | DEPARTAMENTO |
++------------+----------+--------------+
+| Carr       | Feminino | Filmes       |
+| Dean       | Feminino | Filmes       |
+| Gordon     | Feminino | Filmes       |
+| Harris     | Feminino | Filmes       |
+| Cooper     | Feminino | Filmes       |
+| Harris     | Feminino | Filmes       |
+| Morris     | Feminino | Filmes       |
+| Little     | Feminino | Filmes       |
+| Warren     | Feminino | Filmes       |
+| Rice       | Feminino | Filmes       |
+| Gomez      | Feminino | Filmes       |
+| Knight     | Feminino | Filmes       |
+| Bishop     | Feminino | Filmes       |
+| Walker     | Feminino | Filmes       |
+| Freeman    | Feminino | Lar          |
+| Gibson     | Feminino | Lar          |
+| Crawford   | Feminino | Lar          |
+| Campbell   | Feminino | Lar          |
+| Gonzales   | Feminino | Lar          |
+| Payne      | Feminino | Lar          |
+| Cooper     | Feminino | Lar          |
+| Chapman    | Feminino | Lar          |
+| Williams   | Feminino | Lar          |
+| Morales    | Feminino | Lar          |
+| Berry      | Feminino | Lar          |
+| Porter     | Feminino | Lar          |
+| Cox        | Feminino | Lar          |
+| Morris     | Feminino | Lar          |
+| Walker     | Feminino | Lar          |
+| Myers      | Feminino | Lar          |
+| Olson      | Feminino | Lar          |
+| Evans      | Feminino | Lar          |
+| Owens      | Feminino | Lar          |
+| Mendoza    | Feminino | Lar          |
+| Ferguson   | Feminino | Lar          |
+| Cruz       | Feminino | Lar          |
+| Burke      | Feminino | Lar          |
+| Murray     | Feminino | Lar          |
+| Washington | Feminino | Lar          |
+| Montgomery | Feminino | Lar          |
+| Gonzales   | Feminino | Lar          |
+| Carpenter  | Feminino | Lar          |
+| Gilbert    | Feminino | Lar          |
+| Jones      | Feminino | Lar          |
+| Diaz       | Feminino | Lar          |
+| Sanchez    | Feminino | Lar          |
++------------+----------+--------------+
+46 rows in set (0.00 sec)
+
+003 - TRAGA OS FUNCIONARIOS DO SEXO MASCULINO OU OS FUNCIONARIOS QUE TABALHEM NO SETOR JARDIM;
+
++---------------+-----+
+| DEPARTAMENTO  | QTD |
++---------------+-----+
+| Crianças      |  17 |
+| Música        |  18 |
+| Ferramentas   |  18 |
+| Esporte       |  18 |
+| Lar           |  20 |
+| Outdoors      |  20 |
+| Saúde         |  21 |
+| Filmes        |  22 |
+| Alimentícios  |  22 |
+| Books         |  23 |
+| Roupas        |  24 |
+| Games         |  24 |
+| Brinquedos    |  24 |
+| Calçados      |  25 |
+| Beleza        |  25 |
+| Automotivo    |  26 |
+| Joalheria     |  26 |
+| Eletronicos   |  26 |
+| Bebês         |  26 |
+| Computadores  |  26 |
+| Industrial    |  29 |
+| Jardim        |  47 |
++---------------+-----+
+
+SELECT NOME, SEXO, DEPARTAMENTO FROM FUNCIONARIOS WHERE SEXO="MASCULINO" OR DEPARTAMENTO="JARDIM" ORDER BY DEPARTAMENTO, SEXO;
++------------+-----------+---------------+
+| NOME       | SEXO      | DEPARTAMENTO  |
++------------+-----------+---------------+
+| Adams      | Masculino | Alimentícios  |
+| Sims       | Masculino | Alimentícios  |
+| Daniels    | Masculino | Alimentícios  |
+| Rose       | Masculino | Alimentícios  |
+| Carter     | Masculino | Alimentícios  |
+| Myers      | Masculino | Alimentícios  |
+| Tucker     | Masculino | Alimentícios  |
+| Burke      | Masculino | Alimentícios  |
+| Moreno     | Masculino | Alimentícios  |
+| Nelson     | Masculino | Alimentícios  |
+| Peters     | Masculino | Alimentícios  |
+| Pierce     | Masculino | Alimentícios  |
+| Carroll    | Masculino | Alimentícios  |
+| Frazier    | Masculino | Alimentícios  |
+| Gonzalez   | Masculino | Alimentícios  |
+| Morris     | Masculino | Alimentícios  |
+| Rice       | Masculino | Alimentícios  |
+| George     | Masculino | Alimentícios  |
+| Dixon      | Masculino | Alimentícios  |
+| White      | Masculino | Alimentícios  |
+| Turner     | Masculino | Alimentícios  |
+| Edwards    | Masculino | Alimentícios  |
+| Carr       | Masculino | Automotivo    |
+| Alexander  | Masculino | Automotivo    |
+| Nguyen     | Masculino | Automotivo    |
+| Ross       | Masculino | Automotivo    |
+| Boyd       | Masculino | Automotivo    |
+| Reed       | Masculino | Automotivo    |
+| Fox        | Masculino | Automotivo    |
+| Lawson     | Masculino | Automotivo    |
+| Schmidt    | Masculino | Automotivo    |
+| Edwards    | Masculino | Automotivo    |
+| Gutierrez  | Masculino | Automotivo    |
+| Hall       | Masculino | Automotivo    |
+| Nichols    | Masculino | Automotivo    |
+| Anderson   | Masculino | Automotivo    |
+| Sanchez    | Masculino | Automotivo    |
+| George     | Masculino | Automotivo    |
+| Duncan     | Masculino | Automotivo    |
+| Mcdonald   | Masculino | Automotivo    |
+| Gordon     | Masculino | Automotivo    |
+| Thomas     | Masculino | Automotivo    |
+| Burns      | Masculino | Automotivo    |
+| Butler     | Masculino | Automotivo    |
+| Owens      | Masculino | Automotivo    |
+| Webb       | Masculino | Automotivo    |
+| Mcdonald   | Masculino | Automotivo    |
+| Peterson   | Masculino | Automotivo    |
+| Schmidt    | Masculino | Bebês         |
+| Kennedy    | Masculino | Bebês         |
+| Dixon      | Masculino | Bebês         |
+| Vasquez    | Masculino | Bebês         |
+| Wallace    | Masculino | Bebês         |
+| Moore      | Masculino | Bebês         |
+| Wagner     | Masculino | Bebês         |
+| Sanders    | Masculino | Bebês         |
+| Tucker     | Masculino | Bebês         |
+| Ortiz      | Masculino | Bebês         |
+| Ward       | Masculino | Bebês         |
+| Vasquez    | Masculino | Bebês         |
+| Hudson     | Masculino | Bebês         |
+| Jones      | Masculino | Bebês         |
+| Scott      | Masculino | Bebês         |
+| Richards   | Masculino | Bebês         |
+| Morgan     | Masculino | Bebês         |
+| Bell       | Masculino | Bebês         |
+| Gordon     | Masculino | Bebês         |
+| Dixon      | Masculino | Bebês         |
+| Fowler     | Masculino | Bebês         |
+| Tucker     | Masculino | Bebês         |
+| Richards   | Masculino | Bebês         |
+| Williams   | Masculino | Bebês         |
+| Medina     | Masculino | Bebês         |
+| Howard     | Masculino | Bebês         |
+| Weaver     | Masculino | Beleza        |
+| Rodriguez  | Masculino | Beleza        |
+| Coleman    | Masculino | Beleza        |
+| Mason      | Masculino | Beleza        |
+| Andrews    | Masculino | Beleza        |
+| Gomez      | Masculino | Beleza        |
+| Graham     | Masculino | Beleza        |
+| Ford       | Masculino | Beleza        |
+| Harvey     | Masculino | Beleza        |
+| Long       | Masculino | Beleza        |
+| Woods      | Masculino | Beleza        |
+| Wagner     | Masculino | Beleza        |
+| Owens      | Masculino | Beleza        |
+| Harvey     | Masculino | Beleza        |
+| Mendoza    | Masculino | Beleza        |
+| Vasquez    | Masculino | Beleza        |
+| Crawford   | Masculino | Beleza        |
+| Reid       | Masculino | Beleza        |
+| Gutierrez  | Masculino | Beleza        |
+| Wilson     | Masculino | Beleza        |
+| Moreno     | Masculino | Beleza        |
+| Chapman    | Masculino | Beleza        |
+| Collins    | Masculino | Beleza        |
+| Simmons    | Masculino | Beleza        |
+| Ryan       | Masculino | Beleza        |
+| Howell     | Masculino | Books         |
+| Larson     | Masculino | Books         |
+| Robinson   | Masculino | Books         |
+| Fields     | Masculino | Books         |
+| Peterson   | Masculino | Books         |
+| Griffin    | Masculino | Books         |
+| Fowler     | Masculino | Books         |
+| Ray        | Masculino | Books         |
+| Owens      | Masculino | Books         |
+| Murphy     | Masculino | Books         |
+| Bailey     | Masculino | Books         |
+| Brooks     | Masculino | Books         |
+| Matthews   | Masculino | Books         |
+| Rice       | Masculino | Books         |
+| Garza      | Masculino | Books         |
+| Campbell   | Masculino | Books         |
+| Elliott    | Masculino | Books         |
+| Hall       | Masculino | Books         |
+| Turner     | Masculino | Books         |
+| Hamilton   | Masculino | Books         |
+| Spencer    | Masculino | Books         |
+| Perry      | Masculino | Books         |
+| Hudson     | Masculino | Books         |
+| Stephens   | Masculino | Brinquedos    |
+| Stewart    | Masculino | Brinquedos    |
+| Wagner     | Masculino | Brinquedos    |
+| Riley      | Masculino | Brinquedos    |
+| Romero     | Masculino | Brinquedos    |
+| Martin     | Masculino | Brinquedos    |
+| Foster     | Masculino | Brinquedos    |
+| Holmes     | Masculino | Brinquedos    |
+| Greene     | Masculino | Brinquedos    |
+| Harris     | Masculino | Brinquedos    |
+| Hansen     | Masculino | Brinquedos    |
+| Frazier    | Masculino | Brinquedos    |
+| Ramirez    | Masculino | Brinquedos    |
+| Owens      | Masculino | Brinquedos    |
+| Adams      | Masculino | Brinquedos    |
+| Watkins    | Masculino | Brinquedos    |
+| Ray        | Masculino | Brinquedos    |
+| Baker      | Masculino | Brinquedos    |
+| Black      | Masculino | Brinquedos    |
+| Nichols    | Masculino | Brinquedos    |
+| Jordan     | Masculino | Brinquedos    |
+| Austin     | Masculino | Brinquedos    |
+| Morrison   | Masculino | Brinquedos    |
+| Welch      | Masculino | Brinquedos    |
+| Young      | Masculino | Calçados      |
+| Burton     | Masculino | Calçados      |
+| Kelley     | Masculino | Calçados      |
+| Henry      | Masculino | Calçados      |
+| Meyer      | Masculino | Calçados      |
+| Harrison   | Masculino | Calçados      |
+| Harrison   | Masculino | Calçados      |
+| Lane       | Masculino | Calçados      |
+| Freeman    | Masculino | Calçados      |
+| Watson     | Masculino | Calçados      |
+| Duncan     | Masculino | Calçados      |
+| Freeman    | Masculino | Calçados      |
+| Porter     | Masculino | Calçados      |
+| Russell    | Masculino | Calçados      |
+| Nelson     | Masculino | Calçados      |
+| Fuller     | Masculino | Calçados      |
+| Owens      | Masculino | Calçados      |
+| Richards   | Masculino | Calçados      |
+| Hill       | Masculino | Calçados      |
+| Rose       | Masculino | Calçados      |
+| Montgomery | Masculino | Calçados      |
+| George     | Masculino | Calçados      |
+| Wright     | Masculino | Calçados      |
+| Lopez      | Masculino | Calçados      |
+| Woods      | Masculino | Calçados      |
+| Williamson | Masculino | Computadores  |
+| Watkins    | Masculino | Computadores  |
+| Johnson    | Masculino | Computadores  |
+| Coleman    | Masculino | Computadores  |
+| Gibson     | Masculino | Computadores  |
+| Wheeler    | Masculino | Computadores  |
+| West       | Masculino | Computadores  |
+| Gibson     | Masculino | Computadores  |
+| Fox        | Masculino | Computadores  |
+| Elliott    | Masculino | Computadores  |
+| Moore      | Masculino | Computadores  |
+| Marshall   | Masculino | Computadores  |
+| Olson      | Masculino | Computadores  |
+| White      | Masculino | Computadores  |
+| Gonzalez   | Masculino | Computadores  |
+| Little     | Masculino | Computadores  |
+| Evans      | Masculino | Computadores  |
+| Banks      | Masculino | Computadores  |
+| Walker     | Masculino | Computadores  |
+| Marshall   | Masculino | Computadores  |
+| Carpenter  | Masculino | Computadores  |
+| Weaver     | Masculino | Computadores  |
+| Robertson  | Masculino | Computadores  |
+| Burke      | Masculino | Computadores  |
+| Bell       | Masculino | Computadores  |
+| Lane       | Masculino | Computadores  |
+| Hughes     | Masculino | Crianças      |
+| Gardner    | Masculino | Crianças      |
+| Miller     | Masculino | Crianças      |
+| Chavez     | Masculino | Crianças      |
+| Edwards    | Masculino | Crianças      |
+| Hayes      | Masculino | Crianças      |
+| Graham     | Masculino | Crianças      |
+| Lynch      | Masculino | Crianças      |
+| Frazier    | Masculino | Crianças      |
+| Reynolds   | Masculino | Crianças      |
+| Carroll    | Masculino | Crianças      |
+| Sullivan   | Masculino | Crianças      |
+| Washington | Masculino | Crianças      |
+| Kelley     | Masculino | Crianças      |
+| Hall       | Masculino | Crianças      |
+| James      | Masculino | Crianças      |
+| Thomas     | Masculino | Crianças      |
+| Day        | Masculino | Eletronicos   |
+| Montgomery | Masculino | Eletronicos   |
+| Martinez   | Masculino | Eletronicos   |
+| Gonzalez   | Masculino | Eletronicos   |
+| Moore      | Masculino | Eletronicos   |
+| West       | Masculino | Eletronicos   |
+| Johnson    | Masculino | Eletronicos   |
+| Robinson   | Masculino | Eletronicos   |
+| Williams   | Masculino | Eletronicos   |
+| Hawkins    | Masculino | Eletronicos   |
+| Hanson     | Masculino | Eletronicos   |
+| Miller     | Masculino | Eletronicos   |
+| Hamilton   | Masculino | Eletronicos   |
+| Lynch      | Masculino | Eletronicos   |
+| Fisher     | Masculino | Eletronicos   |
+| Wright     | Masculino | Eletronicos   |
+| Washington | Masculino | Eletronicos   |
+| Gilbert    | Masculino | Eletronicos   |
+| Stone      | Masculino | Eletronicos   |
+| Jacobs     | Masculino | Eletronicos   |
+| Kelley     | Masculino | Eletronicos   |
+| Stanley    | Masculino | Eletronicos   |
+| Burns      | Masculino | Eletronicos   |
+| Spencer    | Masculino | Eletronicos   |
+| Hunt       | Masculino | Eletronicos   |
+| Stevens    | Masculino | Eletronicos   |
+| Armstrong  | Masculino | Esporte       |
+| Ferguson   | Masculino | Esporte       |
+| Palmer     | Masculino | Esporte       |
+| Bell       | Masculino | Esporte       |
+| Riley      | Masculino | Esporte       |
+| Peters     | Masculino | Esporte       |
+| Murray     | Masculino | Esporte       |
+| Sims       | Masculino | Esporte       |
+| Hall       | Masculino | Esporte       |
+| Mason      | Masculino | Esporte       |
+| Cole       | Masculino | Esporte       |
+| Rodriguez  | Masculino | Esporte       |
+| Reyes      | Masculino | Esporte       |
+| Fowler     | Masculino | Esporte       |
+| Wells      | Masculino | Esporte       |
+| Nguyen     | Masculino | Esporte       |
+| Anderson   | Masculino | Esporte       |
+| Hawkins    | Masculino | Esporte       |
+| Phillips   | Masculino | Ferramentas   |
+| Daniels    | Masculino | Ferramentas   |
+| Gutierrez  | Masculino | Ferramentas   |
+| Harvey     | Masculino | Ferramentas   |
+| Thomas     | Masculino | Ferramentas   |
+| Johnston   | Masculino | Ferramentas   |
+| Mason      | Masculino | Ferramentas   |
+| Perez      | Masculino | Ferramentas   |
+| Henderson  | Masculino | Ferramentas   |
+| Cole       | Masculino | Ferramentas   |
+| Webb       | Masculino | Ferramentas   |
+| Williams   | Masculino | Ferramentas   |
+| Dixon      | Masculino | Ferramentas   |
+| Hanson     | Masculino | Ferramentas   |
+| Hill       | Masculino | Ferramentas   |
+| Bell       | Masculino | Ferramentas   |
+| James      | Masculino | Ferramentas   |
+| Wood       | Masculino | Ferramentas   |
+| Sanchez    | Masculino | Filmes        |
+| Greene     | Masculino | Filmes        |
+| Reed       | Masculino | Filmes        |
+| Simmons    | Masculino | Filmes        |
+| Franklin   | Masculino | Filmes        |
+| Martin     | Masculino | Filmes        |
+| Thompson   | Masculino | Filmes        |
+| Sanders    | Masculino | Filmes        |
+| Sanders    | Masculino | Filmes        |
+| George     | Masculino | Filmes        |
+| Gonzales   | Masculino | Filmes        |
+| Snyder     | Masculino | Filmes        |
+| Spencer    | Masculino | Filmes        |
+| Roberts    | Masculino | Filmes        |
+| Griffin    | Masculino | Filmes        |
+| Kelley     | Masculino | Filmes        |
+| Arnold     | Masculino | Filmes        |
+| Clark      | Masculino | Filmes        |
+| Johnson    | Masculino | Filmes        |
+| Elliott    | Masculino | Filmes        |
+| Weaver     | Masculino | Filmes        |
+| Price      | Masculino | Filmes        |
+| Torres     | Masculino | Games         |
+| Baker      | Masculino | Games         |
+| Thomas     | Masculino | Games         |
+| Rivera     | Masculino | Games         |
+| Martinez   | Masculino | Games         |
+| Williamson | Masculino | Games         |
+| Morales    | Masculino | Games         |
+| Stevens    | Masculino | Games         |
+| Ross       | Masculino | Games         |
+| Spencer    | Masculino | Games         |
+| Smith      | Masculino | Games         |
+| Griffin    | Masculino | Games         |
+| Peterson   | Masculino | Games         |
+| Parker     | Masculino | Games         |
+| Matthews   | Masculino | Games         |
+| Bowman     | Masculino | Games         |
+| Walker     | Masculino | Games         |
+| Snyder     | Masculino | Games         |
+| Anderson   | Masculino | Games         |
+| Cooper     | Masculino | Games         |
+| Evans      | Masculino | Games         |
+| Cox        | Masculino | Games         |
+| Jackson    | Masculino | Games         |
+| Butler     | Masculino | Games         |
+| George     | Masculino | Industrial    |
+| Wells      | Masculino | Industrial    |
+| Burton     | Masculino | Industrial    |
+| Hayes      | Masculino | Industrial    |
+| Meyer      | Masculino | Industrial    |
+| Sanders    | Masculino | Industrial    |
+| Dunn       | Masculino | Industrial    |
+| Garza      | Masculino | Industrial    |
+| Mills      | Masculino | Industrial    |
+| Jacobs     | Masculino | Industrial    |
+| Morgan     | Masculino | Industrial    |
+| Perry      | Masculino | Industrial    |
+| Sullivan   | Masculino | Industrial    |
+| Rodriguez  | Masculino | Industrial    |
+| Weaver     | Masculino | Industrial    |
+| Owens      | Masculino | Industrial    |
+| Moreno     | Masculino | Industrial    |
+| Perry      | Masculino | Industrial    |
+| Elliott    | Masculino | Industrial    |
+| Baker      | Masculino | Industrial    |
+| Tucker     | Masculino | Industrial    |
+| Sims       | Masculino | Industrial    |
+| Mccoy      | Masculino | Industrial    |
+| Gibson     | Masculino | Industrial    |
+| Murray     | Masculino | Industrial    |
+| Williamson | Masculino | Industrial    |
+| Moore      | Masculino | Industrial    |
+| Austin     | Masculino | Industrial    |
+| Kennedy    | Masculino | Industrial    |
+| Williamson | Feminino  | Jardim        |
+| Griffin    | Feminino  | Jardim        |
+| Reynolds   | Feminino  | Jardim        |
+| Shaw       | Feminino  | Jardim        |
+| Cunningham | Feminino  | Jardim        |
+| Rice       | Feminino  | Jardim        |
+| Burke      | Feminino  | Jardim        |
+| Parker     | Feminino  | Jardim        |
+| Gutierrez  | Feminino  | Jardim        |
+| Carter     | Feminino  | Jardim        |
+| Meyer      | Feminino  | Jardim        |
+| Barnes     | Feminino  | Jardim        |
+| Ruiz       | Feminino  | Jardim        |
+| Lopez      | Feminino  | Jardim        |
+| Clark      | Feminino  | Jardim        |
+| Hansen     | Feminino  | Jardim        |
+| Burton     | Feminino  | Jardim        |
+| Reyes      | Feminino  | Jardim        |
+| Phillips   | Feminino  | Jardim        |
+| Hansen     | Feminino  | Jardim        |
+| Reyes      | Feminino  | Jardim        |
+| Cunningham | Feminino  | Jardim        |
+| Fowler     | Feminino  | Jardim        |
+| Kelly      | Masculino | Jardim        |
+| Watkins    | Masculino | Jardim        |
+| Cooper     | Masculino | Jardim        |
+| Chavez     | Masculino | Jardim        |
+| Robertson  | Masculino | Jardim        |
+| White      | Masculino | Jardim        |
+| Bennett    | Masculino | Jardim        |
+| Ortiz      | Masculino | Jardim        |
+| Clark      | Masculino | Jardim        |
+| Hunter     | Masculino | Jardim        |
+| Gilbert    | Masculino | Jardim        |
+| Crawford   | Masculino | Jardim        |
+| Reed       | Masculino | Jardim        |
+| Lopez      | Masculino | Jardim        |
+| Scott      | Masculino | Jardim        |
+| Carr       | Masculino | Jardim        |
+| Cook       | Masculino | Jardim        |
+| Stone      | Masculino | Jardim        |
+| Vasquez    | Masculino | Jardim        |
+| Willis     | Masculino | Jardim        |
+| Kim        | Masculino | Jardim        |
+| Ross       | Masculino | Jardim        |
+| Perry      | Masculino | Jardim        |
+| Ramos      | Masculino | Jardim        |
+| James      | Masculino | Joalheria     |
+| Hart       | Masculino | Joalheria     |
+| Howard     | Masculino | Joalheria     |
+| Tucker     | Masculino | Joalheria     |
+| Burke      | Masculino | Joalheria     |
+| Sims       | Masculino | Joalheria     |
+| Hicks      | Masculino | Joalheria     |
+| Vasquez    | Masculino | Joalheria     |
+| Ross       | Masculino | Joalheria     |
+| Moore      | Masculino | Joalheria     |
+| Flores     | Masculino | Joalheria     |
+| Ramirez    | Masculino | Joalheria     |
+| Webb       | Masculino | Joalheria     |
+| Diaz       | Masculino | Joalheria     |
+| Watkins    | Masculino | Joalheria     |
+| Washington | Masculino | Joalheria     |
+| Johnston   | Masculino | Joalheria     |
+| Rivera     | Masculino | Joalheria     |
+| Hall       | Masculino | Joalheria     |
+| Williams   | Masculino | Joalheria     |
+| Torres     | Masculino | Joalheria     |
+| Banks      | Masculino | Joalheria     |
+| Harrison   | Masculino | Joalheria     |
+| Hayes      | Masculino | Joalheria     |
+| Riley      | Masculino | Joalheria     |
+| Williams   | Masculino | Joalheria     |
+| Nguyen     | Masculino | Lar           |
+| Crawford   | Masculino | Lar           |
+| Carroll    | Masculino | Lar           |
+| Anderson   | Masculino | Lar           |
+| Andrews    | Masculino | Lar           |
+| Boyd       | Masculino | Lar           |
+| Gutierrez  | Masculino | Lar           |
+| Murphy     | Masculino | Lar           |
+| Sanders    | Masculino | Lar           |
+| Ellis      | Masculino | Lar           |
+| Moreno     | Masculino | Lar           |
+| Austin     | Masculino | Lar           |
+| Harper     | Masculino | Lar           |
+| Brooks     | Masculino | Lar           |
+| Hudson     | Masculino | Lar           |
+| Day        | Masculino | Lar           |
+| Butler     | Masculino | Lar           |
+| Cruz       | Masculino | Lar           |
+| Welch      | Masculino | Lar           |
+| Diaz       | Masculino | Lar           |
+| Little     | Masculino | Música        |
+| Hamilton   | Masculino | Música        |
+| Roberts    | Masculino | Música        |
+| Banks      | Masculino | Música        |
+| Holmes     | Masculino | Música        |
+| Perez      | Masculino | Música        |
+| Welch      | Masculino | Música        |
+| Brooks     | Masculino | Música        |
+| Bailey     | Masculino | Música        |
+| Rice       | Masculino | Música        |
+| Cruz       | Masculino | Música        |
+| Sullivan   | Masculino | Música        |
+| Mills      | Masculino | Música        |
+| Perkins    | Masculino | Música        |
+| Ward       | Masculino | Música        |
+| Miller     | Masculino | Música        |
+| Howard     | Masculino | Música        |
+| Young      | Masculino | Música        |
+| Bradley    | Masculino | Outdoors      |
+| Lawrence   | Masculino | Outdoors      |
+| Lane       | Masculino | Outdoors      |
+| Welch      | Masculino | Outdoors      |
+| Lopez      | Masculino | Outdoors      |
+| Williamson | Masculino | Outdoors      |
+| Jacobs     | Masculino | Outdoors      |
+| Washington | Masculino | Outdoors      |
+| Cunningham | Masculino | Outdoors      |
+| Hudson     | Masculino | Outdoors      |
+| Reynolds   | Masculino | Outdoors      |
+| Jenkins    | Masculino | Outdoors      |
+| Lawrence   | Masculino | Outdoors      |
+| Carpenter  | Masculino | Outdoors      |
+| Pierce     | Masculino | Outdoors      |
+| Peterson   | Masculino | Outdoors      |
+| Hall       | Masculino | Outdoors      |
+| Howard     | Masculino | Outdoors      |
+| Webb       | Masculino | Outdoors      |
+| Edwards    | Masculino | Outdoors      |
+| Black      | Masculino | Roupas        |
+| Cunningham | Masculino | Roupas        |
+| Perkins    | Masculino | Roupas        |
+| Fisher     | Masculino | Roupas        |
+| Berry      | Masculino | Roupas        |
+| Arnold     | Masculino | Roupas        |
+| Gonzales   | Masculino | Roupas        |
+| Young      | Masculino | Roupas        |
+| Boyd       | Masculino | Roupas        |
+| Gomez      | Masculino | Roupas        |
+| Williamson | Masculino | Roupas        |
+| Richards   | Masculino | Roupas        |
+| Kim        | Masculino | Roupas        |
+| Taylor     | Masculino | Roupas        |
+| Lynch      | Masculino | Roupas        |
+| Greene     | Masculino | Roupas        |
+| Phillips   | Masculino | Roupas        |
+| Roberts    | Masculino | Roupas        |
+| Murray     | Masculino | Roupas        |
+| Richards   | Masculino | Roupas        |
+| Elliott    | Masculino | Roupas        |
+| James      | Masculino | Roupas        |
+| Marshall   | Masculino | Roupas        |
+| Richards   | Masculino | Roupas        |
+| Webb       | Masculino | Saúde         |
+| Matthews   | Masculino | Saúde         |
+| Diaz       | Masculino | Saúde         |
+| Cruz       | Masculino | Saúde         |
+| Gonzalez   | Masculino | Saúde         |
+| Robinson   | Masculino | Saúde         |
+| Fuller     | Masculino | Saúde         |
+| Ryan       | Masculino | Saúde         |
+| Harrison   | Masculino | Saúde         |
+| Dixon      | Masculino | Saúde         |
+| Gonzalez   | Masculino | Saúde         |
+| Lopez      | Masculino | Saúde         |
+| Garza      | Masculino | Saúde         |
+| Hicks      | Masculino | Saúde         |
+| Thomas     | Masculino | Saúde         |
+| Armstrong  | Masculino | Saúde         |
+| Price      | Masculino | Saúde         |
+| Gonzalez   | Masculino | Saúde         |
+| Parker     | Masculino | Saúde         |
+| Clark      | Masculino | Saúde         |
+| Hanson     | Masculino | Saúde         |
++------------+-----------+---------------+
+527 rows in set (0.00 sec)
