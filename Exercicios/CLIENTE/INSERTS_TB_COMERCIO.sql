@@ -55,3 +55,113 @@ WHERE SEXO = 'F'; --> SELEÇÃO
 SELECT NUMERO --> PROJEÇÃO
 FROM TELEFONE --> ORIGEM DOS DADOS
 WHERE TIPO = 'CEL'; --> SELEÇÃO
+
+/* JUNÇÃO DE TABELAS -> JOIN */
+
+-- INICIAMOS PELA DEFINIÇÃO DO QUE QUEREMOS OBTER
+
+SELECT NOME, EMAIL, IDCLIENTE
+FROM CLIENTE;
+
+SELECT ID_CLIENTE, BAIRRO, CIDADE
+FROM ENDERECO;
+
+--> QUANDO REALIZAMOS UM INNER JOIN, JUNTAMOS AS COLUNAS
+--- QUE SERÃO COMPARADAS. (OS IDs)
+
+SELECT NOME, SEXO, BAIRRO, CIDADE --> PROJEÇÃO
+FROM CLIENTE --> ORIGEM
+	INNER JOIN ENDERECO --> JUNÇÃO
+	ON IDCLIENTE = ID_CLIENTE --> CONDIÇÃO ONDE COLUNAPK = COLUNAFK
+WHERE SEXO = "F"; --> SELEÇÃO
+/* 
++------------+------+---------------+--------------+
+| NOME       | SEXO | BAIRRO        | CIDADE       |
++------------+------+---------------+--------------+
+| ROBERTA    | F    | BEBIM OSWALDO | SAO PAULEIRA |
+| JOAQUINA   | F    | DIAGONAL 12   | PELOTAS      |
+| JASMIN     | F    | TRANSVERSAL   | BRASOLIA     |
+| SEROTONINA | F    | ITIQUIRA      | FLORIPA      |
++------------+------+---------------+--------------+
+*/
+
+--> TRAGA NOME, SEXO, EMAIL, TIPO, NUMERO
+
+
+SELECT NOME, SEXO, EMAIL, TIPO, NUMERO
+FROM CLIENTE
+INNER JOIN TELEFONE
+ON IDCLIENTE = ID_CLIENTE;
+/*
++----------+------+----------------------+--------+----------+
+| NOME     | SEXO | EMAIL                | TIPO   | NUMERO   |
++----------+------+----------------------+--------+----------+
+| JOAO     | M    | JOAO@RIUTO.COM       | CEL    | 99876545 |
+| JOAO     | M    | JOAO@RIUTO.COM       | RES    | 33234545 |
+| CLARA    | M    | NULL                 | CEL    | 33777665 |
+| CLARA    | M    | NULL                 | COMERC | 33376545 |
+| ROBERTA  | F    | ROBERTA@CELOKO.COM   | CEL    | 55334445 |
+| ROBERTA  | F    | ROBERTA@CELOKO.COM   | COMERC | 33876545 |
+| JOAQUINA | F    | KINA_DEBOAS@VISH.COM | CEL    | 99432341 |
+| JASMIN   | F    | JAS@MIN.COM          | CEL    | 43765421 |
+| JASMIN   | F    | JAS@MIN.COM          | RES    | 33844445 |
++----------+------+----------------------+--------+----------+
+*/
+
+--> O RESULTADO É 1 PARA N, ENTÃO QUEM POSSUIR MAIS DE UM NÚMERO
+-- DE TELEFONE CADASTRADO APARECERÁ EM LINHAS "DUPLICADAS"
+
+SELECT NOME, EMAIL, NUMERO, CIDADE, ESTADO
+FROM CLIENTE
+INNER JOIN TELEFONE
+ON IDCLIENTE = ID_CLIENTE
+INNER JOIN ENDERECO
+ON IDCLIENTE = ID_CLIENTE;
+--> ERROR 1052 (23000): Column 'ID_CLIENTE' in on clause is ambiguous
+
+
+SELECT CLIENTE.NOME, CLIENTE.EMAIL, TELEFONE.NUMERO, ENDERECO.CIDADE, ENDERECO.ESTADO
+FROM CLIENTE
+INNER JOIN TELEFONE
+ON CLIENTE.IDCLIENTE = TELEFONE.ID_CLIENTE
+INNER JOIN ENDERECO
+ON CLIENTE.IDCLIENTE = ENDERECO.ID_CLIENTE;
+
++----------+----------------------+----------+-----------------+--------+
+| NOME     | EMAIL                | NUMERO   | CIDADE          | ESTADO |
++----------+----------------------+----------+-----------------+--------+
+| JOAO     | JOAO@RIUTO.COM       | 99876545 | PARALELANDIA    | PL     |
+| JOAO     | JOAO@RIUTO.COM       | 33234545 | PARALELANDIA    | PL     |
+| CLARA    | NULL                 | 33777665 | RIO DE SETEMBRO | RJ     |
+| CLARA    | NULL                 | 33376545 | RIO DE SETEMBRO | RJ     |
+| ROBERTA  | ROBERTA@CELOKO.COM   | 55334445 | SAO PAULEIRA    | SP     |
+| ROBERTA  | ROBERTA@CELOKO.COM   | 33876545 | SAO PAULEIRA    | SP     |
+| JOAQUINA | KINA_DEBOAS@VISH.COM | 99432341 | PELOTAS         | RS     |
+| JASMIN   | JAS@MIN.COM          | 43765421 | BRASOLIA        | DF     |
+| JASMIN   | JAS@MIN.COM          | 33844445 | BRASOLIA        | DF     |
++----------+----------------------+----------+-----------------+--------+
+
+OU
+
+--> APLICANDO ALIAS
+
+SELECT C.NOME, C.SEXO, E.BAIRRO, E.CIDADE, T.TIPO, T.NUMERO
+FROM CLIENTE C
+INNER JOIN ENDERECO E
+ON C.IDCLIENTE = E.ID_CLIENTE
+INNER JOIN TELEFONE T
+ON C.IDCLIENTE = T.ID_CLIENTE;
+
++----------+------+---------------+-----------------+--------+----------+
+| NOME     | SEXO | BAIRRO        | CIDADE          | TIPO   | NUMERO   |
++----------+------+---------------+-----------------+--------+----------+
+| JOAO     | M    | BAIRROLANDIA  | PARALELANDIA    | CEL    | 99876545 |
+| JOAO     | M    | BAIRROLANDIA  | PARALELANDIA    | RES    | 33234545 |
+| CLARA    | M    | BECO DO NEGO  | RIO DE SETEMBRO | CEL    | 33777665 |
+| CLARA    | M    | BECO DO NEGO  | RIO DE SETEMBRO | COMERC | 33376545 |
+| ROBERTA  | F    | BEBIM OSWALDO | SAO PAULEIRA    | CEL    | 55334445 |
+| ROBERTA  | F    | BEBIM OSWALDO | SAO PAULEIRA    | COMERC | 33876545 |
+| JOAQUINA | F    | DIAGONAL 12   | PELOTAS         | CEL    | 99432341 |
+| JASMIN   | F    | TRANSVERSAL   | BRASOLIA        | CEL    | 43765421 |
+| JASMIN   | F    | TRANSVERSAL   | BRASOLIA        | RES    | 33844445 |
++----------+------+---------------+-----------------+--------+----------+
