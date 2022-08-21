@@ -3,7 +3,7 @@
 	INNER JOIN TELEFONE T
 	ON C.IDCLIENTE = T.ID_CLIENTE
 	INNER JOIN ENDERECO E
-	ON C.IDCLIENTE = E.ID_CLIENTE;
+	ON C.IDCLIENTE = E.ID_CLIENTE; 
 	
 	---------------------------------------------------------
 	
@@ -64,3 +64,108 @@ WHERE ID_CLIENTE=3;
 DESC CLIENTE;
 DESC ENDERECO;
 DESC TELEFONE;
+
+--> CORREÇÃO DOS EXERCÍCIOS
+
+--> NA PRIMEIRA QUESTÃO, NÃO ERA PARA TRAZER TODOS OS ELEMENTOS COM O *, POIS ISSO NÃO SE FAZ PROFISSIONALMENTE.
+
+--> INICIAMOS COM O DESC DE CADA TABELA PARA ESCOLHERMOS OS QUE DESEJAMOS PROJETAR
+
+/* RELATORIO GERAL DE TODOS OS CLIENTES */
+
+DESC CLIENTE;
+DESC ENDERECO;
+DESC TELEFONE;
+ DESC CLIENTE;
++-----------+---------------+------+-----+---------+----------------+
+| Field     | Type          | Null | Key | Default | Extra          |
++-----------+---------------+------+-----+---------+----------------+
+| IDCLIENTE | int(11)       | NO   | PRI | NULL    | auto_increment |
+| NOME      | varchar(30)   | NO   |     | NULL    |                |
+| SEXO      | enum('M','F') | NO   |     | NULL    |                |
+| EMAIL     | varchar(50)   | YES  | UNI | NULL    |                |
+| CPF       | varchar(15)   | YES  | UNI | NULL    |                |
++-----------+---------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> DESC ENDERECO;
++------------+-------------+------+-----+---------+----------------+
+| Field      | Type        | Null | Key | Default | Extra          |
++------------+-------------+------+-----+---------+----------------+
+| IDENDERECO | int(11)     | NO   | PRI | NULL    | auto_increment |
+| RUA        | varchar(30) | NO   |     | NULL    |                |
+| BAIRRO     | varchar(30) | NO   |     | NULL    |                |
+| CIDADE     | varchar(30) | NO   |     | NULL    |                |
+| ESTADO     | char(2)     | NO   |     | NULL    |                |
+| ID_CLIENTE | int(11)     | YES  | UNI | NULL    |                |
++------------+-------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> DESC TELEFONE;
++------------+-------------------------+------+-----+---------+----------------+
+| Field      | Type                    | Null | Key | Default | Extra          |
++------------+-------------------------+------+-----+---------+----------------+
+| IDTELEFONE | int(11)                 | NO   | PRI | NULL    | auto_increment |
+| TIPO       | enum('RES','COM','CEL') | NO   |     | NULL    |                |
+| NUMERO     | varchar(10)             | NO   |     | NULL    |                |
+| ID_CLIENTE | int(11)                 | YES  | MUL | NULL    |                |
++------------+-------------------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+SELECT C.IDCLIENTE, C.NOME, C.SEXO, C.EMAIL, C.CPF, 
+	   E.CIDADE, E.BAIRRO, E.ESTADO, 
+	   T.TIPO, T.NUMERO
+FROM CLIENTE C
+INNER JOIN ENDERECO E
+ON C.IDCLIENTE = E.ID_CLIENTE
+INNER JOIN TELEFONE T
+ON C.IDCLIENTE = T.ID_CLIENTE;
+
+--> A PARTIR DESTE RELATÓRIO DEVEMOS ATUALIZAR O SEXO QUE ESTIVER ERRADO
+
+--> ANTES DE FAZER UM UPDATE, DEVEMOS PROJETAR COM O SELECT
+
+SELECT * FROM CLIENTE
+WHERE SEXO = 'M';
+
+--> DESCOBRIMOS OS IDS QUE ESTÃO ERRADOS: 6, 7, 12, 13, 18, 19
+
+SELECT * FROM CLIENTE
+WHERE IDCLIENTE IN(6, 7, 12, 13, 18, 19);
+
+UPDATE CLIENTE SET SEXO = 'F'
+WHERE IDCLIENTE IN (6, 7, 12, 13, 18, 19);
+
+/* RELATORIO - SOMENTE HOMENS */
+
+SELECT C.IDCLIENTE, C.NOME, C.SEXO, C.EMAIL, C.CPF, 
+	   E.CIDADE, E.BAIRRO, E.ESTADO, 
+	   T.TIPO, T.NUMERO
+FROM CLIENTE C
+INNER JOIN ENDERECO E
+ON C.IDCLIENTE = E.ID_CLIENTE
+INNER JOIN TELEFONE T
+ON C.IDCLIENTE = T.ID_CLIENTE
+WHERE C.SEXO = 'M';
+
+/* RELATORIO - SOMENTE MULHERES */
+
+SELECT C.IDCLIENTE, C.NOME, C.SEXO, C.EMAIL, C.CPF, 
+	   E.CIDADE, E.BAIRRO, E.ESTADO, 
+	   T.TIPO, T.NUMERO
+FROM CLIENTE C
+INNER JOIN ENDERECO E
+ON C.IDCLIENTE = E.ID_CLIENTE
+INNER JOIN TELEFONE T
+ON C.IDCLIENTE = T.ID_CLIENTE
+WHERE C.SEXO = 'F';
+
+/* IDS E EMAILS DAS MULHERES QUE MORAM NO CENTRO DO RJ E NÃO TEM CELULAR*/
+
+SELECT C.NOME, C.SEXO, C.EMAIL, E.BAIRRO, E.CIDADE, T.TIPO, T.NUMERO
+FROM CLIENTE C
+INNER JOIN ENDERECO E
+ON C.IDCLIENTE = E.ID_CLIENTE
+INNER JOIN TELEFONE T
+ON C.IDCLIENTE = T.ID_CLIENTE
+WHERE C.SEXO = "F" AND E.BAIRRO = "CENTRO" AND E.CIDADE = "RIO DE JANEIRO" AND NOT T.TIPO="CEL";
